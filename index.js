@@ -1,6 +1,22 @@
 function fetchBooks() {
-  // To pass the tests, don't forget to return your fetch!
-  
+  // Make a fetch request to the Game of Thrones API
+  return fetch('https://anapioficeandfire.com/api/books')
+    .then(response => {
+      // Check if the response status is OK 
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // Convert the response to JSON
+      return response.json();
+    })
+    .then(data => {
+      // Call the renderBooks function with the JSON data
+      renderBooks(data);
+    })
+    .catch(error => {
+      // Handle any errors that occur during the fetch
+      console.error('There was a problem with the fetch operation:', error);
+    });
 }
 
 function renderBooks(books) {
@@ -12,6 +28,4 @@ function renderBooks(books) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  fetchBooks();
-});
+document.addEventListener('DOMContentLoaded', fetchBooks);
